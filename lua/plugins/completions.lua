@@ -13,6 +13,7 @@ return {
 		config = function()
 			local cmp = require("cmp")
 			require("luasnip.loaders.from_vscode").lazy_load()
+			local lspkind = require("lspkind")
 			cmp.setup({
 				snippet = {
 					expand = function(args)
