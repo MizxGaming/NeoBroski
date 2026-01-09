@@ -8,14 +8,23 @@ return {
 			"L3MON4D3/LuaSnip", -- Snippet engine
 			"saadparwaiz1/cmp_luasnip",
 			"rafamadriz/friendly-snippets",
+			"onsails/lspkind.nvim", -- ADD THIS for NvChad-style icons
 		},
 		config = function()
 			local cmp = require("cmp")
+			require("luasnip.loaders.from_vscode").lazy_load()
 			cmp.setup({
 				snippet = {
 					expand = function(args)
 						require("luasnip").lsp_expand(args.body)
 					end,
+				},
+				formatting = {
+					format = lspkind.cmp_format({
+						mode = "symbol_text",
+						maxwidth = 50,
+						ellipsis_char = "...",
+					}),
 				},
 				window = {
 					completion = cmp.config.window.bordered(), -- Styled popups
@@ -29,8 +38,8 @@ return {
 					["<Tab>"] = cmp.mapping.confirm({ select = true }), -- NvChad feel
 				}),
 				sources = cmp.config.sources({
-					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
+					{ name = "nvim_lsp" },
 					{ name = "buffer" },
 					{ name = "path" },
 				}),
